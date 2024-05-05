@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drag and Drop Image Classification</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ml5@0.12.2/dist/ml5.min.js"></script>
+  <script src="util.js"></script>
+  <script src="sketch.js"></script>
+  <style>
+    /* Stildefinitionen */
+    #drop_zone {
+      width: 400px;
+      height: 200px;
+      border: 2px dashed #aaa;
+      padding: 20px;
+      text-align: center;
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #aaa;
+    }
+    #thumbnail, #classificationResult {
+      margin-top: 20px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+    }
+    #confidenceBar {
+      width: 200px; /* Initial width */
+      height: 20px;
+      background-color: #ddd;
+      text-align: center;
+      color: white;
+      transition: width 0.5s ease;
+    }
+    button {
+      margin-top: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Drag and Drop Image Classification</h1>
+  <!-- Tabellen für die letzten Klassifizierungen -->
+  <h2>Zuletzt korrekt klassifizierte Fälle</h2>
+  <table id="correctTable">
+    <thead>
+      <tr>
+        <th>Thumbnail</th>
+        <th>Klassifizierung</th>
+        <th>Confidence</th>
+      </tr>
+    </thead>
+    <tbody id="correctBody"></tbody>
+  </table>
+  <h2>Zuletzt falsch klassifizierte Fälle</h2>
+  <table id="incorrectTable">
+    <thead>
+      <tr>
+        <th>Thumbnail</th>
+        <th>Klassifizierung</th>
+        <th>Confidence</th>
+      </tr>
+    </thead>
+    <tbody id="incorrectBody"></tbody>
+  </table>
+
+  <!-- Drag-and-Drop-Zone -->
+  <div id="drop_zone" ondragover="event.preventDefault()" ondrop="gotFile(event)">
+    <p>Drag and Drop</p>
+  </div>
+
+  <!-- Thumbnail- und Klassifikations-Anzeige -->
+  <div id="thumbnail"></div>
+  <div id="classificationResult">
+    <div id="imageContainer"></div>
+    <div id="diagramContainer">
+      <div id="confidenceBar"></div>
+    </div>
+  </div>
+
+  <!-- Buttons für die Klassifizierung -->
+  <button id="classifyButton">Klassifizieren</button>
+  <button id="correctButton" style="display: none;">Richtig klassifiziert</button>
+  <button id="incorrectButton" style="display: none;">Falsch klassifiziert</button>
+</body>
+</html>
